@@ -13,7 +13,7 @@ class WordViewHelper extends AbstractViewHelper {
     /**
      * @var array
      */
-    protected $writers = [
+    protected static $writers = [
         'HTML' => 'html',
         'ODText' => 'odt',
         'PDF' => 'pdf',
@@ -37,7 +37,7 @@ class WordViewHelper extends AbstractViewHelper {
             DownloadViewHelper::class,
             'filename',
             ($this->viewHelperVariableContainer->get(DownloadViewHelper::class, 'filename') ?: 'Document')
-                .'.'.$this->writers[$writerName]
+                .'.'.self::$writers[$writerName]
         );
 
         $tempFilename = tempnam(Settings::getTempDir(), 'PhpWord');
@@ -56,6 +56,6 @@ class WordViewHelper extends AbstractViewHelper {
      * @return string
      */
     protected function getWriterName(): string {
-        return in_array($this->arguments['writer'], array_keys($this->writers)) ? $this->arguments['writer'] : self::DEFAULT_WRITER;
+        return in_array($this->arguments['writer'], array_keys(self::$writers)) ? $this->arguments['writer'] : self::DEFAULT_WRITER;
     }
 }

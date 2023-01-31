@@ -2,17 +2,19 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'PHPWord',
     'description' => 'PHPWord, https://github.com/PHPOffice/PHPWord',
+    'version' => '1.0.0',
     'category' => 'fe',
-    'author' => 'Bill.Dagou',
-    'author_email' => 'billdagou@gmail.com',
-    'version' => '0.18.2',
-    'state' => 'stable',
     'constraints' => [
         'depends' => [
-            'dagou_fluid' => '10.4.0-10.4.99',
-            'typo3' => '10.4.0-10.4.99',
+            'typo3' => '11.5.0-11.5.99',
+        ],
+        'suggests' => [
+            'dagou_fluid' => '',
         ],
     ],
+    'state' => 'stable',
+    'author' => 'Bill.Dagou',
+    'author_email' => 'billdagou@gmail.com',
     'autoload' => [
         'classmap' => [
             'Classes',

@@ -10,15 +10,19 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 class WordViewHelper extends AbstractViewHelper {
     const DEFAULT_WRITER = 'Word2007';
 
-    /**
-     * @var array
-     */
-    protected static $writers = [
+    protected static array $writers = [
         'HTML' => 'html',
         'ODText' => 'odt',
         'PDF' => 'pdf',
         'RTF' => 'rtf',
         'Word2007' => 'docx',
+    ];
+    protected static array $mimeTypes = [
+        'docx' => '',
+        'html' => 'text/html',
+        'odt' => 'application/vnd.oasis.opendocument.text',
+        'pdf' => 'application/pdf',
+        'rtf' => 'application/rtf',
     ];
 
     public function initializeArguments() {
@@ -39,8 +43,9 @@ class WordViewHelper extends AbstractViewHelper {
             ($this->viewHelperVariableContainer->get(DownloadViewHelper::class, 'filename') ?: 'Document')
                 .'.'.self::$writers[$writerName]
         );
+        $this->viewHelperVariableContainer->add(DownloadViewHelper::class, 'mimeType', self::$mimeTypes[self::$writers[$writerName]]);
 
-        $tempFilename = tempnam(Settings::getTempDir(), 'PhpWord');
+        $tempFilename = tempnam(Settings::getTempDir(), 'PHPWord');
 
         IOFactory::createWriter($this->arguments['phpWord'] ?? $this->renderChildren(), $writerName)
             ->save($tempFilename);
